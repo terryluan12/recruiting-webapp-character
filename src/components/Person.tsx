@@ -14,6 +14,11 @@ export const PersonSection = () => {
         acc[attribute] = 0;
         return acc;
     }, {} as { [key: string]: number }));
+    const [skillsState, setSkillsState] = useState<{ [key: string]: number }>(SKILL_LIST.reduce((acc, skill) => {
+        acc[skill.name] = 0;
+        return acc;
+    }
+    , {} as { [key: string]: number }));
 
     return (
         <section className="App-section">
@@ -21,7 +26,7 @@ export const PersonSection = () => {
                               attributeState={attributeState} setAttributeState={setAttributeState}
                               modifierState={modifierState} setModifierState={setModifierState} />
             <ClassSection classes={CLASS_LIST} attributeState={attributeState} />
-            <SkillsSection skills={SKILL_LIST} />
+            <SkillsSection skills={SKILL_LIST} modifiers={modifierState} skillsState={skillsState} setSkillsState={setSkillsState}/>
         </section>
     )
 }
