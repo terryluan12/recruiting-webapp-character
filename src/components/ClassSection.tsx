@@ -17,14 +17,18 @@ export const ClassSection = ({ classes, attributeState }) => {
         
         setIsClassState(classState);
     }, [attributeState, classes]);
+
+    const display = (classType) => {
+        alert(`Minimum stats for ${classType} are: ${JSON.stringify(classes[classType])}`);
+    }
     
 
     return (
         <section className="Class-Section">
             {Object.keys(classes).map((classType) => (
                 <div key={classType}>
-                    <div className={isClassState[classType] ? 'red' : 'white'}>
-                        {isClassState[classType] ? classType : "NOT"}
+                    <div onClick={() => display(classType)} className={isClassState[classType] ? 'isClass' : ''}>
+                        {classType}
                     </div>
                 </div>
             ))}
