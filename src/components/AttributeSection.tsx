@@ -1,24 +1,33 @@
 import { useState } from 'react';
 
-export const AttributeSection = ({ attributes }) => {
-    const [values, setValues] = useState<{ [key: string]: number }>(
-        attributes.reduce((acc, attribute) => {
-            acc[attribute] = 0;
-            return acc;
-        }, {} as { [key: string]: number })
-    );
-
+export const AttributeSection = ({ attributes, totalPoints, setTotalPoints, attributeState, setAttributeState, modifierState, setModifierState }) => {
     const handleIncrement = (attribute: string) => {
-        setValues({
-            ...values,
-            [attribute]: values[attribute] + 1
+        if(totalPoints == 70) {
+            alert("Error: You have reached the maximum number of points.");
+            return
+        }
+        setTotalPoints(totalPoints + 1);
+        setModifierState({
+            ...modifierState,
+            [attribute]: Math.floor((attributeState[attribute] - 9)/2)
         });
+        setAttributeState({
+            ...attributeState,
+            [attribute]: attributeState[attribute] + 1
+        });
+        console.log("Attribute State: ", attributeState);
+        console.log("Modifier State: ", modifierState);
     }
 
     const handleDecrement = (attribute: string) => {
-        setValues({
-            ...values,
-            [attribute]: values[attribute] + 1
+        setTotalPoints(totalPoints - 1);
+        setModifierState({
+            ...modifierState,
+            [attribute]: Math.floor((attributeState[attribute] - 11)/2)
+        });
+        setAttributeState({
+            ...attributeState,
+            [attribute]: attributeState[attribute] - 1
         });
     }
 
@@ -29,8 +38,8 @@ export const AttributeSection = ({ attributes }) => {
                     <div key={attribute}>
                             <div>
                             {attribute}:
-                            {values[attribute]}
-                            (Modifier: {values[attribute] - 10})
+                            {attributeState[attribute]}
+                            (Modifier: {modifierState[attribute]})
                             <button onClick={() => handleIncrement(attribute)}>+</button>
                             <button onClick={() => handleDecrement(attribute)}>-</button>
                             </div>
