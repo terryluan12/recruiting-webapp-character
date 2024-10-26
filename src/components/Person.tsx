@@ -2,6 +2,7 @@ import { AttributeSection } from './AttributeSection'
 import { ClassSection } from './ClassSection'
 import { useState } from 'react';
 import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from '../consts';
+import { SkillsSection } from './SkillsSection';
 
 export const PersonSection = () => {
     const [totalPoints, setTotalPoints] = useState(0);
@@ -20,6 +21,7 @@ export const PersonSection = () => {
                               attributeState={attributeState} setAttributeState={setAttributeState}
                               modifierState={modifierState} setModifierState={setModifierState} />
             <ClassSection classes={CLASS_LIST} attributeState={attributeState} />
+            <SkillsSection skills={SKILL_LIST} />
         </section>
     )
 }
