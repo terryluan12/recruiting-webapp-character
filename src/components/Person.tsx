@@ -1,10 +1,10 @@
 import { AttributeSection } from './AttributeSection'
 import { ClassSection } from './ClassSection'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from '../consts';
 import { SkillsSection } from './SkillsSection';
 
-export const PersonSection = () => {
+export const PersonSection = ({pid, setPeople}) => {
     const [totalPoints, setTotalPoints] = useState(0);
     const [attributeState, setAttributeState] = useState<{ [key: string]: number }>(ATTRIBUTE_LIST.reduce((acc, attribute) => {
         acc[attribute] = 10;
@@ -19,6 +19,21 @@ export const PersonSection = () => {
         return acc;
     }
     , {} as { [key: string]: number }));
+
+    useEffect(() => {
+        const classState = {
+            pid: pid,
+            attributeState: {...attributeState},
+            modifierState: {...modifierState},
+            skillsState: {...skillsState}
+        };
+        setPeople((prevPeople) => {
+            const newPeople = prevPeople.slice();
+            newPeople[pid] = classState;
+            return newPeople;
+        });
+
+    })
 
     return (
         <section className="App-section">
